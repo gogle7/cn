@@ -11,7 +11,7 @@ set val(ifqlen)		 50
 set val(nn)		 6		
 set val(stop)		100.0		
      set val(rp)            AODV 
- #set val(sc)               "mob-6-3" 
+ #set val(sc)               "mob-25-50" 
 set val(cp)               "tcp-6-3" 
 
 set ns_ [new Simulator] 
@@ -30,7 +30,7 @@ $topo load_flatgrid $val(x) $val(y)
 
 set god_ [create-god $val(nn)]
 
-				 
+     #Node Configuration				 
 
         $ns_ node-config -adhocRouting $val(rp) \
 			 -llType $val(ll) \
@@ -46,7 +46,7 @@ set god_ [create-god $val(nn)]
 			 -routerTrace ON \
 			 -macTrace ON
 
-				 
+#Creating Nodes					 
 for {set i 0} {$i < $val(nn) } {incr i} {
      set node_($i) [$ns_ node]	
      $node_($i) random-motion 0
@@ -61,25 +61,27 @@ for {set i 0} {$i < $val(nn) } {incr i} {
                   
             }
             
-            for {set i 0} {$i < $val(nn) } { incr i } {
-               set time1 [expr rand()*100]  
+	for {set i 0} {$i <$val(nn)} {incr i} {
+		set time1 [expr rand()*100]
 		set xx [expr rand()*500]
-                  set yy [expr rand()*400]
-                  $ns_ at time1 "$node_($i) setdest xx yy 20.0"
-                  
-            }
-		
+		set yy [expr rand()*500]
+		$ns_ at time1 "$node_($i) setdest $xx $yy 20.0"
+	}
+
+#Initial Positions of Nodes			
 
 for {set i 0} {$i < $val(nn)} {incr i} {
 	$ns_ initial_node_pos $node_($i) 40
 }
 
 
-
+#puts "Loading scenario file..."
+#source $val(sc)
 puts "Loading connection file..."
 source $val(cp)
 
-			 
+
+#Simulation Termination				 
 
 for {set i 0} {$i < $val(nn) } {incr i} {
     $ns_ at $val(stop) "$node_($i) reset";
