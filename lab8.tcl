@@ -8,11 +8,11 @@ set val(ant)          Antenna/OmniAntenna
 set val(x)		      500	
 set val(y)		      500	
 set val(ifqlen)		 50		
-set val(nn)		 6		
+set val(nn)		 25		
 set val(stop)		100.0		
      set val(rp)            AODV 
  #set val(sc)               "mob-25-50" 
-set val(cp)               "tcp-6-3" 
+set val(cp)               "tcp-25-8" 
 
 set ns_ [new Simulator] 
 
@@ -60,13 +60,7 @@ for {set i 0} {$i < $val(nn) } {incr i} {
                   $node_($i) set Y_ $yy
                   
             }
-            
-	for {set i 0} {$i <$val(nn)} {incr i} {
-		set time1 [expr rand()*100]
-		set xx [expr rand()*500]
-		set yy [expr rand()*500]
-		$ns_ at time1 "$node_($i) setdest $xx $yy 20.0"
-	}
+
 
 #Initial Positions of Nodes			
 
